@@ -1,7 +1,7 @@
 
 use std::sync::Arc;
 
-use plugins::plugin_auth::PluginAuth;
+use plugins::{plugin_auth::PluginAuth, plugin_lostpeople::PluginLostPeople};
 use smn_web_core::{plugins::plugin_static::PluginStatic, systems::{sys_core::run_server, sys_plugin::PluginManager}};
 
 mod plugins;
@@ -12,6 +12,7 @@ async fn main() {
     let mut manager = PluginManager::new();
 
     // Apply the plugins.
+    manager.apply_plugin(Box::new(PluginLostPeople::new()));
     manager.apply_plugin(Box::new(PluginAuth::new()));
     manager.apply_plugin(Box::new(PluginStatic::new(true)));
     
